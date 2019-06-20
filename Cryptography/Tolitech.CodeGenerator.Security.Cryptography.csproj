@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageIconUrl>http://www.tolitech.com.br/images/icon.png</PackageIconUrl>
+    <PackageIconUrl>http://www.codegenerator.com.br/images/icon.png</PackageIconUrl>
     <Authors>Eduardo Tolino</Authors>
     <Company>Tolitech</Company>
     <Product>Tolitech Code Generator</Product>
