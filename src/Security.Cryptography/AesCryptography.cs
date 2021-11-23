@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Security.Cryptography;
 
 namespace Tolitech.CodeGenerator.Security.Cryptography
@@ -15,7 +14,7 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
         /// <returns>Encrypted text</returns>
         public static string Encrypt(string plainText, string key, string iv)
         {
-            string data = null;
+            string? data = null;
 
             using (Aes aesAlg = Aes.Create())
             {
@@ -50,7 +49,7 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
         /// <returns>Decrypted text</returns>
         public static string Decrypt(string encryptedText, string key, string iv)
         {
-            string data = null;
+            string? data = null;
 
             using (Aes aesAlg = Aes.Create())
             {
@@ -83,9 +82,9 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
         /// <returns>Encrypted file</returns>
         public static byte[] Encrypt(byte[] plainFile, string key, string iv)
         {
-            byte[] encryptedFile = null;
+            byte[]? encryptedFile = null;
 
-            using (var aes = new AesCryptoServiceProvider())
+            using (var aes = Aes.Create())
             {
                 aes.Key = Convert.FromBase64String(key);
                 aes.IV = Convert.FromBase64String(iv);
@@ -122,9 +121,9 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
         /// <returns>Decrypted file</returns>
         public static byte[] Decrypt(byte[] encryptedFile, string key, string iv)
         {
-            byte[] plainFile = null;
+            byte[]? plainFile = null;
 
-            using (var aes = new AesCryptoServiceProvider())
+            using (var aes = Aes.Create())
             {
                 aes.Key = Convert.FromBase64String(key);
                 aes.IV = Convert.FromBase64String(iv);
