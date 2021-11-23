@@ -14,7 +14,7 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
         /// <returns>Encrypted text</returns>
         public static string Encrypt(string plainText, string salt)
         {
-            string data = null;
+            string? data = null;
 
             using (var provider = SHA512.Create())
             {

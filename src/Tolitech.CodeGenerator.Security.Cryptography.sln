@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tolitech.CodeGenerator.Security.Cryptography", "Security.Cryptography\Tolitech.CodeGenerator.Security.Cryptography.csproj", "{A3D2284A-D177-4F04-B4AD-8919700CACCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tolitech.CodeGenerator.Security.Cryptography.Tests", "Security.Cryptography.Tests\Tolitech.CodeGenerator.Security.Cryptography.Tests.csproj", "{BDA80161-71B1-480A-8BB1-9B0C7B0A20A7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3D2284A-D177-4F04-B4AD-8919700CACCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3D2284A-D177-4F04-B4AD-8919700CACCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3D2284A-D177-4F04-B4AD-8919700CACCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3D2284A-D177-4F04-B4AD-8919700CACCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDA80161-71B1-480A-8BB1-9B0C7B0A20A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDA80161-71B1-480A-8BB1-9B0C7B0A20A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDA80161-71B1-480A-8BB1-9B0C7B0A20A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDA80161-71B1-480A-8BB1-9B0C7B0A20A7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {330235AD-A28C-4B04-BE38-C14302545725}
+	EndGlobalSection
+EndGlobal
