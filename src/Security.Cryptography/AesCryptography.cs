@@ -23,18 +23,14 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
 
                 ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
-                using (MemoryStream msEncrypt = new MemoryStream())
+                using MemoryStream msEncrypt = new();
+                using CryptoStream csEncrypt = new(msEncrypt, encryptor, CryptoStreamMode.Write);
+                using (StreamWriter swEncrypt = new(csEncrypt))
                 {
-                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            swEncrypt.Write(plainText);
-                        }
-
-                        data = Convert.ToBase64String(msEncrypt.ToArray());
-                    }
+                    swEncrypt.Write(plainText);
                 }
+
+                data = Convert.ToBase64String(msEncrypt.ToArray());
             }
 
             return data;
@@ -58,16 +54,10 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
 
                 ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
-                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(encryptedText)))
-                {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                    {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-                        {
-                            data = srDecrypt.ReadToEnd();
-                        }
-                    }
-                }
+                using MemoryStream msDecrypt = new(Convert.FromBase64String(encryptedText));
+                using CryptoStream csDecrypt = new(msDecrypt, decryptor, CryptoStreamMode.Read);
+                using StreamReader srDecrypt = new(csDecrypt);
+                data = srDecrypt.ReadToEnd();
             }
 
             return data;
@@ -89,24 +79,18 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
                 aes.Key = Convert.FromBase64String(key);
                 aes.IV = Convert.FromBase64String(iv);
                 ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
-                using (MemoryStream plain = new MemoryStream(plainFile))
+                using MemoryStream plain = new(plainFile);
+                using MemoryStream encrypted = new();
+                using (CryptoStream cs = new(encrypted, encryptor, CryptoStreamMode.Write))
                 {
-                    using (MemoryStream encrypted = new MemoryStream())
-                    {
-                        using (CryptoStream cs = new CryptoStream(encrypted, encryptor, CryptoStreamMode.Write))
-                        {
-                            using (var originalByteStream = new MemoryStream(plainFile))
-                            {
-                                int data;
+                    using var originalByteStream = new MemoryStream(plainFile);
+                    int data;
 
-                                while ((data = originalByteStream.ReadByte()) != -1)
-                                    cs.WriteByte((byte)data);
-                            }
-                        }
-
-                        encryptedFile = encrypted.ToArray();
-                    }
+                    while ((data = originalByteStream.ReadByte()) != -1)
+                        cs.WriteByte((byte)data);
                 }
+
+                encryptedFile = encrypted.ToArray();
             }
 
             return encryptedFile;
@@ -129,23 +113,19 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
                 aes.IV = Convert.FromBase64String(iv);
                 ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
-                using (MemoryStream encrypted = new MemoryStream(encryptedFile))
+                using MemoryStream encrypted = new(encryptedFile);
+                using MemoryStream plain = new();
+                using (CryptoStream cs = new(encrypted, decryptor, CryptoStreamMode.Read))
                 {
-                    using (MemoryStream plain = new MemoryStream())
-                    {
-                        using (CryptoStream cs = new CryptoStream(encrypted, decryptor, CryptoStreamMode.Read))
-                        {
-                            int data;
+                    int data;
 
-                            while ((data = cs.ReadByte()) != -1)
-                                plain.WriteByte((byte)data);
-                        }
-
-                        // reset position in prep for reading.
-                        plain.Position = 0;
-                        plainFile = ConvertToByteArray(plain);
-                    }
+                    while ((data = cs.ReadByte()) != -1)
+                        plain.WriteByte((byte)data);
                 }
+
+                // reset position in prep for reading.
+                plain.Position = 0;
+                plainFile = ConvertToByteArray(plain);
             }
 
             return plainFile;
@@ -181,14 +161,12 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
         {
             byte[] buffer = new byte[16 * 1024];
 
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-                    ms.Write(buffer, 0, read);
+            using MemoryStream ms = new();
+            int read;
+            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                ms.Write(buffer, 0, read);
 
-                return ms.ToArray();
-            }
+            return ms.ToArray();
         }
     }
 }
