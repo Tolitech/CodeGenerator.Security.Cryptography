@@ -20,6 +20,7 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
             {
                 aesAlg.Key = Convert.FromBase64String(key);
                 aesAlg.IV = Convert.FromBase64String(iv);
+                aesAlg.Padding = PaddingMode.PKCS7;
 
                 ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
@@ -51,6 +52,7 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
             {
                 aesAlg.Key = Convert.FromBase64String(key);
                 aesAlg.IV = Convert.FromBase64String(iv);
+                aesAlg.Padding = PaddingMode.PKCS7;
 
                 ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
@@ -78,7 +80,9 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
             {
                 aes.Key = Convert.FromBase64String(key);
                 aes.IV = Convert.FromBase64String(iv);
+                aes.Padding = PaddingMode.PKCS7;
                 ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+                
                 using MemoryStream plain = new(plainFile);
                 using MemoryStream encrypted = new();
                 using (CryptoStream cs = new(encrypted, encryptor, CryptoStreamMode.Write))
@@ -111,6 +115,7 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
             {
                 aes.Key = Convert.FromBase64String(key);
                 aes.IV = Convert.FromBase64String(iv);
+                aes.Padding = PaddingMode.PKCS7;
                 ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
                 using MemoryStream encrypted = new(encryptedFile);
@@ -137,6 +142,7 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
 
             using (Aes aesAlg = Aes.Create())
             {
+                aesAlg.Padding = PaddingMode.PKCS7;
                 aesAlg.GenerateKey();
                 key = Convert.ToBase64String(aesAlg.Key);
             }
@@ -150,6 +156,7 @@ namespace Tolitech.CodeGenerator.Security.Cryptography
 
             using (Aes aesAlg = Aes.Create())
             {
+                aesAlg.Padding = PaddingMode.PKCS7;
                 aesAlg.GenerateIV();
                 IV = Convert.ToBase64String(aesAlg.IV);
             }
